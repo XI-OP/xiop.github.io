@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhodes Island — Контакт</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero {
+      padding: 4rem 2rem 2rem;
+      max-width: 1200px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-eyebrow {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.25em;
+      color: var(--teal); text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--amber); }
+    .page-desc { color: var(--text-secondary); margin-top: 0.5rem; max-width: 600px; }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      padding: 3rem 2rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    .info-block { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .info-card:hover { border-color: var(--border-hot); }
+    .info-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--amber);
+    }
+    .info-card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .info-card-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700; font-size: 1.1rem;
+      color: var(--amber); margin-bottom: 0.5rem;
+    }
+    .info-card-text { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+
+    /* Form */
+    .form-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+    }
+    .form-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--amber), var(--teal), transparent);
+    }
+    .form-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem; color: var(--amber);
+      margin-bottom: 0.25rem;
+    }
+    .form-subtitle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; color: var(--text-muted);
+      letter-spacing: 0.15em; margin-bottom: 1.5rem;
+    }
+
+    /* Auth wall */
+    .auth-wall {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 3rem; text-align: center; gap: 1rem;
+    }
+    .auth-wall-icon { font-size: 3rem; opacity: 0.4; }
+    .auth-wall-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem; color: var(--amber);
+    }
+    .auth-wall-text { color: var(--text-muted); font-size: 0.9rem; }
+    .auth-wall-btns { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+
+    /* My requests */
+    .my-requests { margin-top: 3rem; }
+    .req-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+      align-items: center;
+      transition: var(--transition);
+    }
+    .req-item:hover { border-color: var(--border-hot); }
+    .req-subject {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600; color: var(--text-primary);
+    }
+    .req-meta { color: var(--text-muted); font-family: monospace; font-size: 0.75rem; }
+
+    @media (max-width: 768px) {
+      .contact-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <div class="page-hero">
+      <p class="page-eyebrow">◈ СВЯЗЬ — ПОДАТЬ ЗАЯВКУ</p>
+      <h1 class="page-title">Контакт</h1>
+      <p class="page-desc">Свяжитесь с Rhodes Island. Наши специалисты ответят в течение 24 часов. Для подачи заявки требуется авторизация.</p>
+    </div>
+
+    <div class="contact-layout">
+      <!-- Left: Info -->
+      <div class="info-block">
+        <div class="info-card anim-slide-left delay-1">
+          <div class="info-card-icon">📡</div>
+          <div class="info-card-title">Оперативная связь</div>
+          <div class="info-card-text">
+            Зашифрованный канал активен 24/7.<br>
+            <strong style="color:var(--text-primary)">rhodes@terra.net</strong>
+          </div>
+        </div>
+        <div class="info-card anim-slide-left delay-2">
+          <div class="info-card-icon">📞</div>
+          <div class="info-card-title">Телефон</div>
+          <div class="info-card-text">
+            Горячая линия Rhodes Island:<br>
+            <strong style="color:var(--text-primary)">+7 (000) 174-0-000</strong>
+          </div>
+        </div>
+        <div class="info-card anim-slide-left delay-3">
+          <div class="info-card-icon">🕐</div>
+          <div class="info-card-title">Режим работы</div>
+          <div class="info-card-text">
+            Оперативный штаб: круглосуточно.<br>
+            Медицинский отдел: 08:00–22:00.<br>
+            Административный: 09:00–18:00.
+          </div>
+        </div>
+        <div class="info-card anim-slide-left delay-4">
+          <div class="info-card-icon">🔒</div>
+          <div class="info-card-title">Конфиденциальность</div>
+          <div class="info-card-text">
+            Все ваши данные защищены протоколом шифрования Оригиния. Мы никогда не передаём информацию третьим сторонам без вашего согласия.
+          </div>
+        </div>
+
+        <!-- My submitted requests (for logged-in users) -->
+        <div id="my-requests-block" style="display:none">
+          <h3 style="font-family:'Rajdhani',sans-serif;color:var(--amber);margin-bottom:1rem;font-size:1.2rem">// Мои заявки</h3>
+          <div id="my-requests-list"></div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="form-card anim-fade-up delay-2">
+        <h2 class="form-title">// Подать заявку</h2>
+        <p class="form-subtitle">TRANSMISSION_PROTOCOL — ENCRYPTED</p>
+
+        <!-- Auth wall (shown when not logged in) -->
+        <div id="auth-wall">
+          <div class="auth-wall">
+            <div class="auth-wall-icon">🔐</div>
+            <div class="auth-wall-title">Авторизация требуется</div>
+            <p class="auth-wall-text">Для подачи заявки необходимо войти в систему или создать профиль Доктора.</p>
+            <div class="auth-wall-btns">
+              <button class="btn btn-amber" onclick="Auth.showLogin()">Войти</button>
+              <button class="btn btn-outline" onclick="Auth.showRegister()">Регистрация</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actual form (shown when logged in) -->
+        <div id="contact-form" style="display:none">
+          <div id="form-alert"></div>
+          <div class="form-group">
+            <label class="form-label">Тип обращения</label>
+            <select id="f-type" class="form-select">
+              <option value="medical">Медицинская помощь</option>
+              <option value="recruitment">Вступление в Rhodes Island</option>
+              <option value="tactical">Тактическая поддержка</option>
+              <option value="research">Исследовательское сотрудничество</option>
+              <option value="other">Другое</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Тема</label>
+            <input id="f-subject" class="form-input" type="text" placeholder="Кратко опишите цель обращения">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Сообщение</label>
+            <textarea id="f-message" class="form-textarea" rows="5" placeholder="Подробно изложите вашу ситуацию. Мы постараемся помочь..."></textarea>
+          </div>
+          <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap">
+            <button class="btn btn-amber" onclick="submitForm()">▶ Отправить заявку</button>
+            <span id="sender-name" style="font-family:monospace;font-size:0.8rem;color:var(--text-muted)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function initContactPage() {
+      const user = DB.currentUser();
+      const wall = document.getElementById('auth-wall');
+      const form = document.getElementById('contact-form');
+      const myBlock = document.getElementById('my-requests-block');
+
+      if (user) {
+        wall.style.display = 'none';
+        form.style.display = 'block';
+        document.getElementById('sender-name').textContent = `Отправитель: ${user.displayName}`;
+        renderMyRequests(user);
+      } else {
+        wall.style.display = 'block';
+        form.style.display = 'none';
+        myBlock.style.display = 'none';
+      }
+    }
+
+    function renderMyRequests(user) {
+      const all = DB.getRequests().filter(r => r.userId === user.id);
+      const block = document.getElementById('my-requests-block');
+      const list  = document.getElementById('my-requests-list');
+
+      if (!all.length) { block.style.display = 'none'; return; }
+      block.style.display = 'block';
+
+      const statusLabel = { pending: 'Ожидание', approved: 'Одобрено', rejected: 'Отклонено' };
+      list.innerHTML = all.map(r => `
+        <div class="req-item">
+          <div>
+            <div class="req-subject">${r.subject}</div>
+            <div class="req-meta">${new Date(r.createdAt).toLocaleDateString('ru-RU')} — ${r.type}</div>
+          </div>
+          <span class="status-badge status-${r.status}">${statusLabel[r.status]}</span>
+        </div>
+      `).join('');
+    }
+
+    function submitForm() {
+      const subject = document.getElementById('f-subject').value.trim();
+      const message = document.getElementById('f-message').value.trim();
+      const type    = document.getElementById('f-type').value;
+
+      if (!subject) { showAlert('form-alert', 'Заполните поле "Тема".', 'error'); return; }
+      if (!message) { showAlert('form-alert', 'Заполните поле "Сообщение".', 'error'); return; }
+
+      const res = DB.submitRequest({ subject, message, type });
+      if (!res.ok) { showAlert('form-alert', res.error, 'error'); return; }
+
+      document.getElementById('f-subject').value = '';
+      document.getElementById('f-message').value = '';
+      showAlert('form-alert', '✓ Заявка успешно отправлена. Ожидайте ответа.', 'success');
+      renderMyRequests(DB.currentUser());
+    }
+
+    // Re-init after login
+    const origRenderHeader = window.renderHeader;
+    document.addEventListener('DOMContentLoaded', () => {
+      initContactPage();
+    });
+
+    // Patch Auth callbacks to re-init form
+    const _origLogin = Auth.doLogin.bind(Auth);
+    Auth.doLogin = function() {
+      _origLogin();
+      setTimeout(initContactPage, 100);
+    };
+    const _origReg = Auth.doRegister.bind(Auth);
+    Auth.doRegister = function() {
+      _origReg();
+      setTimeout(initContactPage, 100);
+    };
+  </script>
+</body>
+</html>

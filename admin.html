@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhodes Island — Административная панель</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 64px);
+    }
+
+    /* Sidebar */
+    .admin-sidebar {
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 0;
+      position: sticky; top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+    .sidebar-section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      color: var(--text-muted); text-transform: uppercase;
+      padding: 0.5rem 1.25rem;
+      margin-top: 1rem;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.65rem 1.25rem;
+      color: var(--text-secondary);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600; font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: var(--transition);
+      border-left: 2px solid transparent;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      color: var(--amber);
+      background: rgba(255,190,50,0.06);
+      border-left-color: var(--amber);
+    }
+    .sidebar-icon { font-size: 1rem; }
+    .sidebar-badge {
+      margin-left: auto;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      background: rgba(255,190,50,0.15);
+      color: var(--amber);
+      padding: 1px 6px;
+      border-radius: 2px;
+    }
+
+    /* Main area */
+    .admin-main { padding: 2rem; }
+    .admin-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-title {
+      font-size: 1.8rem; color: var(--amber);
+    }
+    .admin-subtitle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; color: var(--text-muted);
+      letter-spacing: 0.15em; margin-top: 0.25rem;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      position: relative; overflow: hidden;
+      transition: var(--transition);
+    }
+    .stat-card:hover { border-color: var(--border-hot); }
+    .stat-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--amber), transparent);
+    }
+    .stat-value { font-size: 2.5rem; color: var(--amber); font-weight: 700; font-family: 'Rajdhani', sans-serif; line-height: 1; }
+    .stat-label { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.25rem; }
+
+    /* Panel views */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* Requests table */
+    .req-filters { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .detail-btn { cursor: pointer; color: var(--teal); font-family: monospace; font-size: 0.8rem; background: none; border: none; }
+    .detail-btn:hover { text-decoration: underline; }
+
+    /* Users table */
+    .user-avatar { font-size: 1.2rem; }
+
+    /* Log feed */
+    .log-feed {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+    .log-ts { color: var(--text-muted); margin-right: 0.75rem; }
+    .log-ok { color: var(--teal); }
+    .log-warn { color: var(--amber); }
+
+    @media (max-width: 900px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { position: static; height: auto; display: flex; flex-wrap: wrap; gap: 0; }
+      .sidebar-section-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <div class="admin-layout">
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <div>
+          <div class="sidebar-section-label">Главное</div>
+          <div class="sidebar-link active" data-view="dashboard" onclick="switchView('dashboard', this)">
+            <span class="sidebar-icon">📊</span> Дашборд
+          </div>
+          <div class="sidebar-section-label">Данные</div>
+          <div class="sidebar-link" data-view="requests" onclick="switchView('requests', this)">
+            <span class="sidebar-icon">📋</span> Заявки
+            <span class="sidebar-badge" id="badge-req">0</span>
+          </div>
+          <div class="sidebar-link" data-view="users" onclick="switchView('users', this)">
+            <span class="sidebar-icon">👥</span> Пользователи
+          </div>
+          <div class="sidebar-section-label">Система</div>
+          <div class="sidebar-link" data-view="log" onclick="switchView('log', this)">
+            <span class="sidebar-icon">📡</span> Системный лог
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <div class="admin-main">
+        <div class="admin-header">
+          <div>
+            <h1 class="admin-title">// Административная панель</h1>
+            <p class="admin-subtitle">RHODES ISLAND — CLASSIFIED ACCESS</p>
+          </div>
+          <span id="current-time" class="hud-label" style="font-family:monospace"></span>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="view-dashboard" class="view active">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-value" id="s-users">0</div>
+              <div class="stat-label">Пользователей</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="s-reqs">0</div>
+              <div class="stat-label">Заявок всего</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="s-pending">0</div>
+              <div class="stat-label">Ожидают</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="s-approved">0</div>
+              <div class="stat-label">Одобрено</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="s-ops">0</div>
+              <div class="stat-label">Операторов</div>
+            </div>
+          </div>
+
+          <h3 style="color:var(--amber);font-family:'Rajdhani',sans-serif;font-size:1.2rem;margin-bottom:1rem">Последние заявки</h3>
+          <div id="recent-requests"></div>
+        </div>
+
+        <!-- Requests View -->
+        <div id="view-requests" class="view">
+          <h2 style="color:var(--amber);margin-bottom:1rem">Все заявки</h2>
+          <div class="req-filters">
+            <button class="filter-btn active" data-rf="all" onclick="filterReqs('all',this)">Все</button>
+            <button class="filter-btn" data-rf="pending" onclick="filterReqs('pending',this)">Ожидание</button>
+            <button class="filter-btn" data-rf="approved" onclick="filterReqs('approved',this)">Одобрено</button>
+            <button class="filter-btn" data-rf="rejected" onclick="filterReqs('rejected',this)">Отклонено</button>
+          </div>
+          <div id="all-requests"></div>
+        </div>
+
+        <!-- Users View -->
+        <div id="view-users" class="view">
+          <h2 style="color:var(--amber);margin-bottom:1rem">Пользователи</h2>
+          <div class="panel">
+            <table class="data-table" id="users-table">
+              <thead>
+                <tr>
+                  <th>Аватар</th>
+                  <th>Позывной</th>
+                  <th>Имя</th>
+                  <th>Роль</th>
+                  <th>Дата регистрации</th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Log View -->
+        <div id="view-log" class="view">
+          <h2 style="color:var(--amber);margin-bottom:1rem">Системный лог</h2>
+          <div class="panel">
+            <div class="log-feed" id="log-feed"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Guard
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!DB.isAdmin()) {
+        document.querySelector('.admin-layout').innerHTML = `
+          <div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:1rem">
+            <p style="font-family:'Share Tech Mono',monospace;color:var(--red);font-size:1.2rem">// ДОСТУП ЗАПРЕЩЁН</p>
+            <p style="color:var(--text-muted)">Требуются права администратора.</p>
+            <a href="index.html" class="btn btn-outline">← На главную</a>
+          </div>`;
+        return;
+      }
+      initAdmin();
+    });
+
+    let reqFilter = 'all';
+
+    function initAdmin() {
+      updateClock();
+      setInterval(updateClock, 1000);
+      updateStats();
+      renderRecentRequests();
+      renderAllRequests();
+      renderUsers();
+      renderLog();
+    }
+
+    function updateClock() {
+      const el = document.getElementById('current-time');
+      if (el) el.textContent = new Date().toLocaleTimeString('ru-RU');
+    }
+
+    function updateStats() {
+      const users   = DB.getOperators ? [] : [];
+      const reqs    = DB.getRequests();
+      const allUsers = JSON.parse(localStorage.getItem('ark_users') || '[]');
+      const ops     = DB.getOperators();
+
+      document.getElementById('s-users').textContent   = allUsers.length;
+      document.getElementById('s-reqs').textContent    = reqs.length;
+      document.getElementById('s-pending').textContent = reqs.filter(r => r.status === 'pending').length;
+      document.getElementById('s-approved').textContent= reqs.filter(r => r.status === 'approved').length;
+      document.getElementById('s-ops').textContent     = ops.length;
+      document.getElementById('badge-req').textContent = reqs.filter(r => r.status === 'pending').length;
+    }
+
+    function renderRecentRequests() {
+      const el  = document.getElementById('recent-requests');
+      const all = DB.getRequests().slice(-5).reverse();
+      if (!all.length) { el.innerHTML = '<p style="color:var(--text-muted);font-family:monospace;font-size:0.85rem">// Заявок пока нет</p>'; return; }
+      el.innerHTML = buildReqTable(all);
+    }
+
+    function renderAllRequests() {
+      const el  = document.getElementById('all-requests');
+      const all = DB.getRequests();
+      const filtered = reqFilter === 'all' ? all : all.filter(r => r.status === reqFilter);
+      if (!filtered.length) { el.innerHTML = '<p style="color:var(--text-muted);font-family:monospace;font-size:0.85rem;padding:1rem">// Заявок нет</p>'; return; }
+      el.innerHTML = buildReqTable(filtered.reverse(), true);
+    }
+
+    function buildReqTable(reqs, showActions = false) {
+      const statusLabel = { pending: 'Ожидание', approved: 'Одобрено', rejected: 'Отклонено' };
+      const typeLabel = { medical:'Медицинская', recruitment:'Вступление', tactical:'Тактическая', research:'Исследование', other:'Другое' };
+      return `
+        <div class="panel" style="padding:0;overflow:auto">
+          <table class="data-table">
+            <thead><tr>
+              <th>Дата</th><th>Автор</th><th>Тема</th><th>Тип</th><th>Статус</th>
+              ${showActions ? '<th>Действия</th>' : ''}
+            </tr></thead>
+            <tbody>
+              ${reqs.map(r => `
+                <tr>
+                  <td>${new Date(r.createdAt).toLocaleDateString('ru-RU')}</td>
+                  <td><strong style="color:var(--text-primary)">${r.displayName}</strong><br><span style="font-family:monospace;font-size:0.7rem;color:var(--text-muted)">${r.username}</span></td>
+                  <td style="max-width:200px">${r.subject}</td>
+                  <td><span class="chip">${typeLabel[r.type] || r.type}</span></td>
+                  <td><span class="status-badge status-${r.status}">${statusLabel[r.status]}</span></td>
+                  ${showActions ? `
+                    <td style="white-space:nowrap">
+                      <button class="detail-btn" onclick="viewRequest(${r.id})">Детали</button>
+                      ${r.status === 'pending' ? `
+                        <button class="detail-btn" style="color:var(--teal)" onclick="changeStatus(${r.id},'approved')">✓</button>
+                        <button class="detail-btn" style="color:var(--red)" onclick="changeStatus(${r.id},'rejected')">✕</button>
+                      ` : ''}
+                    </td>` : '<td></td>'}
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function viewRequest(id) {
+      const r = DB.getRequests().find(r => r.id === id);
+      if (!r) return;
+      const statusLabel = { pending: 'Ожидание', approved: 'Одобрено', rejected: 'Отклонено' };
+      Modal.open(`
+        <div class="modal-header">
+          <span class="modal-title">// ЗАЯВКА #${r.id}</span>
+          <button class="modal-close" onclick="Modal.close()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+            <div><div class="hud-label">Автор</div><div style="color:var(--text-primary);font-weight:600">${r.displayName}</div><div style="font-family:monospace;font-size:0.75rem;color:var(--text-muted)">${r.username}</div></div>
+            <div><div class="hud-label">Дата</div><div style="color:var(--text-primary)">${new Date(r.createdAt).toLocaleString('ru-RU')}</div></div>
+            <div><div class="hud-label">Тема</div><div style="color:var(--text-primary)">${r.subject}</div></div>
+            <div><div class="hud-label">Статус</div><span class="status-badge status-${r.status}">${statusLabel[r.status]}</span></div>
+          </div>
+          <div class="hud-label" style="margin-bottom:0.5rem">Сообщение</div>
+          <div style="background:var(--bg-deep);border:1px solid var(--border);padding:1rem;color:var(--text-secondary);line-height:1.7;font-size:0.9rem">${r.message}</div>
+          ${r.status === 'pending' ? `
+            <div style="display:flex;gap:0.75rem;margin-top:1.5rem">
+              <button class="btn btn-teal btn-sm" onclick="changeStatus(${r.id},'approved');Modal.close()">✓ Одобрить</button>
+              <button class="btn btn-danger btn-sm" onclick="changeStatus(${r.id},'rejected');Modal.close()">✕ Отклонить</button>
+            </div>` : ''}
+        </div>
+      `);
+    }
+
+    function changeStatus(id, status) {
+      DB.updateRequestStatus(id, status);
+      updateStats();
+      renderRecentRequests();
+      renderAllRequests();
+      const label = status === 'approved' ? 'Одобрено' : 'Отклонено';
+      showToast(`Заявка ${label.toLowerCase()}.`, status === 'approved' ? 'success' : 'error');
+    }
+
+    function filterReqs(f, btn) {
+      reqFilter = f;
+      document.querySelectorAll('.req-filters .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderAllRequests();
+    }
+
+    function renderUsers() {
+      const tbody = document.getElementById('users-tbody');
+      const users = JSON.parse(localStorage.getItem('ark_users') || '[]');
+      tbody.innerHTML = users.map(u => `
+        <tr>
+          <td class="user-avatar">${u.avatar}</td>
+          <td style="font-family:monospace;color:var(--text-primary)">${u.username}</td>
+          <td>${u.displayName}</td>
+          <td><span class="user-badge ${u.role === 'admin' ? 'admin' : ''}">${u.role === 'admin' ? '⚡ ADMIN' : '◈ USER'}</span></td>
+          <td style="font-family:monospace;font-size:0.8rem;color:var(--text-muted)">${new Date(u.createdAt).toLocaleDateString('ru-RU')}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderLog() {
+      const el = document.getElementById('log-feed');
+      const users = JSON.parse(localStorage.getItem('ark_users') || '[]');
+      const reqs  = DB.getRequests();
+      const ops   = DB.getOperators();
+      const now   = new Date().toLocaleTimeString('ru-RU');
+      el.innerHTML = [
+        `<div><span class="log-ts">[${now}]</span><span class="log-ok">INIT</span> — База данных инициализирована</div>`,
+        `<div><span class="log-ts">[${now}]</span><span class="log-ok">OK</span> — Загружено пользователей: ${users.length}</div>`,
+        `<div><span class="log-ts">[${now}]</span><span class="log-ok">OK</span> — Загружено операторов: ${ops.length}</div>`,
+        `<div><span class="log-ts">[${now}]</span><span class="log-ok">OK</span> — Заявок в базе: ${reqs.length}</div>`,
+        `<div><span class="log-ts">[${now}]</span><span class="log-warn">INFO</span> — Ожидают обработки: ${reqs.filter(r=>r.status==='pending').length}</div>`,
+        `<div><span class="log-ts">[${now}]</span><span class="log-ok">OK</span> — Административный модуль активен</div>`,
+        `<div><span class="log-ts">[${now}]</span><span class="log-ok">SECURE</span> — Шифрование канала: AES-256 (Originium Protocol)</div>`,
+        ...reqs.slice(-5).reverse().map(r => `<div><span class="log-ts">[${new Date(r.createdAt).toLocaleTimeString('ru-RU')}]</span><span class="log-warn">REQUEST</span> — ${r.username}: "${r.subject}"</div>`),
+      ].join('');
+    }
+
+    function switchView(view, el) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + view).classList.add('active');
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+</body>
+</html>

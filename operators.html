@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhodes Island — Операторы</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero {
+      padding: 4rem 2rem 2rem;
+      max-width: 1200px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-eyebrow {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.25em;
+      color: var(--teal); text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--amber); }
+    .page-desc { color: var(--text-secondary); margin-top: 0.5rem; max-width: 600px; font-size: 1rem; }
+
+    /* Filters */
+    .filter-bar {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      padding: 1.5rem 2rem;
+      max-width: 1200px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: rgba(255,190,50,0.08);
+    }
+
+    /* Operators grid */
+    .ops-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      padding: 2rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .op-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+    .op-card:hover {
+      border-color: var(--border-hot);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(255,190,50,0.1);
+    }
+    .op-card-top {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--bg-panel) 0%, var(--bg-deep) 100%);
+      display: flex; align-items: center; gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .op-card-top::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(255,190,50,0.1) 0%, transparent 70%);
+    }
+    .op-avatar {
+      width: 60px; height: 60px;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      flex-shrink: 0;
+    }
+    .op-meta { flex: 1; }
+    .op-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--text-primary);
+    }
+    .op-class {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; color: var(--teal);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .op-card-body { padding: 1rem 1.5rem 1.5rem; }
+    .op-bio {
+      font-size: 0.9rem; color: var(--text-secondary);
+      line-height: 1.6; margin-bottom: 1rem;
+    }
+    .op-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+    /* Stars */
+    .op-stars {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      font-size: 0.8rem; color: var(--amber);
+      letter-spacing: 1px;
+    }
+
+    /* Scan line on hover */
+    .op-card::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      top: -2px;
+      transition: var(--transition);
+      opacity: 0;
+    }
+    .op-card:hover::after { top: 0; opacity: 1; }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1/-1;
+      text-align: center; padding: 4rem;
+      color: var(--text-muted);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* Detail modal extras */
+    .op-detail-header {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+    .op-detail-avatar {
+      width: 80px; height: 80px;
+      background: var(--bg-deep);
+      border: 1px solid var(--border-hot);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; flex-shrink: 0;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    }
+    .stat-row { display: flex; flex-direction: column; gap: 0.75rem; }
+    .stat-item { display: flex; flex-direction: column; gap: 0.25rem; }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <div class="page-hero">
+      <p class="page-eyebrow">◈ БАЗА ДАННЫХ — ОПЕРАТОРЫ</p>
+      <h1 class="page-title">Реестр операторов</h1>
+      <p class="page-desc">Полная база данных операторов Rhodes Island. Каждый оператор — уникальная личность с собственными способностями и историей.</p>
+    </div>
+
+    <div class="filter-bar">
+      <span style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--text-muted);align-self:center;letter-spacing:0.1em">ФИЛЬТР:</span>
+      <button class="filter-btn active" data-filter="all">Все</button>
+      <button class="filter-btn" data-filter="Caster">Caster</button>
+      <button class="filter-btn" data-filter="Sniper">Sniper</button>
+      <button class="filter-btn" data-filter="Guard">Guard</button>
+      <button class="filter-btn" data-filter="Defender">Defender</button>
+      <button class="filter-btn" data-filter="Medic">Medic</button>
+    </div>
+
+    <div class="ops-grid" id="ops-grid"></div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const EMOJIS = {
+      Caster: '🔮', Sniper: '🏹', Guard: '⚔️', Defender: '🛡️', Medic: '💊',
+      Supporter: '🌿', Vanguard: '🗡️', Specialist: '🔧'
+    };
+
+    let currentFilter = 'all';
+
+    function renderOperators() {
+      const grid = document.getElementById('ops-grid');
+      const ops = DB.getOperators();
+      const filtered = currentFilter === 'all' ? ops : ops.filter(o => o.class === currentFilter);
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="empty-state">// Операторы не найдены</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((op, i) => `
+        <div class="op-card anim-fade-up" style="animation-delay:${i * 0.07}s" onclick="showOperator(${op.id})">
+          <div class="op-card-top">
+            <div class="op-avatar">${EMOJIS[op.class] || '⚡'}</div>
+            <div class="op-meta">
+              <div class="op-name">${op.name}</div>
+              <div class="op-class">${op.class}</div>
+            </div>
+            <div class="op-stars">${'★'.repeat(op.rarity)}</div>
+          </div>
+          <div class="op-card-body">
+            <p class="op-bio">${op.bio}</p>
+            <div class="op-tags">
+              <span class="chip chip-amber">${op.rarity}★</span>
+              <span class="chip chip-teal">${op.class}</span>
+              <span class="chip">${op.faction}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showOperator(id) {
+      const op = DB.getOperators().find(o => o.id === id);
+      if (!op) return;
+      Modal.open(`
+        <div class="modal-header">
+          <span class="modal-title">// ${op.name.toUpperCase()}</span>
+          <button class="modal-close" onclick="Modal.close()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="op-detail-header">
+            <div class="op-detail-avatar">${EMOJIS[op.class] || '⚡'}</div>
+            <div>
+              <h2 style="font-size:2rem;color:var(--amber)">${op.name}</h2>
+              <div style="color:var(--teal);font-family:monospace;font-size:0.8rem;margin-bottom:0.5rem">${op.class} // ${op.faction}</div>
+              <div class="rarity">${'★'.repeat(op.rarity)}</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="stat-row" style="margin-bottom:1.5rem">
+            <div class="stat-item">
+              <span class="hud-label">Биография</span>
+              <p style="color:var(--text-secondary);line-height:1.7;font-size:0.95rem">${op.bio}</p>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem">
+            <div style="text-align:center;padding:1rem;border:1px solid var(--border);background:var(--bg-deep)">
+              <div class="hud-label">Редкость</div>
+              <div style="font-size:1.5rem;color:var(--amber);font-family:'Rajdhani',sans-serif">${op.rarity}★</div>
+            </div>
+            <div style="text-align:center;padding:1rem;border:1px solid var(--border);background:var(--bg-deep)">
+              <div class="hud-label">Класс</div>
+              <div style="font-size:1rem;color:var(--teal);font-family:'Rajdhani',sans-serif;font-weight:700">${op.class}</div>
+            </div>
+            <div style="text-align:center;padding:1rem;border:1px solid var(--border);background:var(--bg-deep)">
+              <div class="hud-label">Фракция</div>
+              <div style="font-size:0.85rem;color:var(--text-secondary);font-family:'Rajdhani',sans-serif;font-weight:700">${op.faction}</div>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem">
+            <div class="hud-label" style="margin-bottom:0.5rem">Боевая готовность</div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${75 + op.rarity * 3}%"></div>
+            </div>
+          </div>
+        </div>
+      `);
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderOperators();
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', renderOperators);
+  </script>
+</body>
+</html>
