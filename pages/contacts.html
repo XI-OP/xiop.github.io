@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты — Arknights Guide</title>
+  <meta name="description" content="Контакты и обратная связь — Arknights Guide. Есть вопрос или хочешь помочь проекту?">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <div id="header-mount"></div>
+    <main class="main-content" id="main">
+
+      <nav class="breadcrumb" aria-label="Навигация">
+        <a href="../index.html">Главная</a>
+        <span>›</span>
+        <span aria-current="page">Контакты</span>
+      </nav>
+
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-tag">// СВЯЗЬ</div>
+          <h1>Контакты</h1>
+        </div>
+      </div>
+
+      <div class="card-grid cols-2" style="margin-bottom:3rem">
+
+        <!-- Contact info -->
+        <div>
+          <div class="section-header">
+            <div class="section-tag">// О ПРОЕКТЕ</div>
+            <h2 class="section-title" style="font-size:1.4rem">Arknights Guide</h2>
+            <div class="section-divider"></div>
+          </div>
+          <p style="font-size:.88rem;color:var(--text-muted);line-height:1.8;margin-bottom:1.5rem">
+            Это фанатский проект, созданный игроками для игроков. Мы стараемся делать путеводитель максимально полезным, актуальным и понятным для новичков. Проект не связан с HyperGryph или Yostar.
+          </p>
+
+          <div class="card-grid" style="grid-template-columns:1fr;gap:.75rem;margin-bottom:1.5rem">
+            <div class="card" style="padding:1rem 1.25rem">
+              <div style="display:flex;align-items:center;gap:.75rem">
+                <div style="font-size:1.2rem">📧</div>
+                <div>
+                  <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem">Электронная почта</div>
+                  <a href="mailto:guide@arknights.help" style="font-size:.88rem">guide@arknights.help</a>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="padding:1rem 1.25rem">
+              <div style="display:flex;align-items:center;gap:.75rem">
+                <div style="font-size:1.2rem">💬</div>
+                <div>
+                  <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem">Discord</div>
+                  <a href="https://discord.gg/arknights" target="_blank" rel="noopener" style="font-size:.88rem">discord.gg/arknights</a>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="padding:1rem 1.25rem">
+              <div style="display:flex;align-items:center;gap:.75rem">
+                <div style="font-size:1.2rem">🐙</div>
+                <div>
+                  <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem">GitHub</div>
+                  <a href="https://github.com" target="_blank" rel="noopener" style="font-size:.88rem">github.com/arknights-guide</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <strong>Хочешь помочь?</strong> Если ты опытный игрок и хочешь дополнить базу данных или исправить ошибку — напиши нам или сделай Pull Request на GitHub.
+          </div>
+        </div>
+
+        <!-- Feedback form -->
+        <div>
+          <div class="section-header">
+            <div class="section-tag">// ФОРМА</div>
+            <h2 class="section-title" style="font-size:1.4rem">Обратная связь</h2>
+            <div class="section-divider"></div>
+          </div>
+
+          <div class="contact-form" id="contact-form">
+            <div class="form-group">
+              <label class="form-label" for="f-name">Имя / Ник в игре</label>
+              <input type="text" id="f-name" class="form-input" placeholder="Doctor_0001" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-email">Email (необязательно)</label>
+              <input type="email" id="f-email" class="form-input" placeholder="doctor@rhodes.island" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-subject">Тема</label>
+              <select id="f-subject" class="form-select">
+                <option value="">Выбери тему…</option>
+                <option value="error">Ошибка / неточность в гайде</option>
+                <option value="suggestion">Предложение / дополнение</option>
+                <option value="question">Вопрос по игре</option>
+                <option value="other">Другое</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-msg">Сообщение</label>
+              <textarea id="f-msg" class="form-textarea" placeholder="Опиши своё сообщение…"></textarea>
+            </div>
+            <button class="btn btn-primary" id="f-submit">📡 Отправить сообщение</button>
+          </div>
+
+          <div id="form-success" style="display:none" class="info-box gold">
+            <strong>✅ Сообщение сохранено!</strong><br>
+            Спасибо за обратную связь. Это демо-форма — данные сохранены локально в IndexedDB.
+          </div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <section class="section" aria-labelledby="legal-title">
+        <div class="section-header">
+          <div class="section-tag">// ПРАВОВАЯ ИНФОРМАЦИЯ</div>
+          <h2 class="section-title" id="legal-title">Юридическая информация</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="card-grid cols-2">
+          <div class="card">
+            <h3 style="font-family:var(--font-display);font-size:.78rem;font-weight:700;text-transform:uppercase;margin-bottom:.6rem">Авторские права</h3>
+            <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7">
+              Arknights и все связанные торговые марки являются собственностью HyperGryph Co., Ltd. и Yostar Limited. Данный сайт является фанатским и не аффилирован с разработчиками игры.
+            </p>
+          </div>
+          <div class="card">
+            <h3 style="font-family:var(--font-display);font-size:.78rem;font-weight:700;text-transform:uppercase;margin-bottom:.6rem">Политика конфиденциальности</h3>
+            <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7">
+              Этот сайт не собирает персональные данные на внешних серверах. Данные формы обратной связи хранятся локально в вашем браузере (IndexedDB) и не передаются третьим лицам.
+            </p>
+          </div>
+          <div class="card">
+            <h3 style="font-family:var(--font-display);font-size:.78rem;font-weight:700;text-transform:uppercase;margin-bottom:.6rem">Условия использования</h3>
+            <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7">
+              Информация предоставляется «как есть» без гарантий актуальности. Мета игры меняется с каждым обновлением — всегда сверяйся с официальными источниками.
+            </p>
+          </div>
+          <div class="card">
+            <h3 style="font-family:var(--font-display);font-size:.78rem;font-weight:700;text-transform:uppercase;margin-bottom:.6rem">Версия базы данных</h3>
+            <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7">
+              База данных сайта: v1.0<br>
+              Последнее обновление: 2025<br>
+              Данные актуальны для глобального сервера EN.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module">
+    import { initDB, putOne } from '../js/database.js';
+    import { renderHeader, renderFooter, initBurger, showToast } from '../js/components.js';
+
+    document.getElementById('header-mount').innerHTML = renderHeader('contacts');
+    document.getElementById('footer-mount').innerHTML = renderFooter();
+    initBurger();
+
+    initDB().then(() => {
+      document.getElementById('f-submit').addEventListener('click', async () => {
+        const name    = document.getElementById('f-name').value.trim();
+        const email   = document.getElementById('f-email').value.trim();
+        const subject = document.getElementById('f-subject').value;
+        const msg     = document.getElementById('f-msg').value.trim();
+
+        if (!name || !msg) {
+          showToast('⚠ Заполни имя и сообщение');
+          return;
+        }
+
+        const record = { key: `feedback_${Date.now()}`, name, email, subject, msg, date: new Date().toISOString() };
+        await putOne('progress', record);
+
+        document.getElementById('contact-form').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+        showToast('✅ Сохранено локально');
+      });
+    });
+  </script>
+</body>
+</html>

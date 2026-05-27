@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arknights Guide — Путеводитель для новичков</title>
+  <meta name="description" content="Полный путеводитель по Arknights для новичков: операторы, механики, советы и FAQ. Начни свой путь в Rhodes Island.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <div id="header-mount"></div>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-tag fade-up">// RHODES ISLAND — OPERATOR GUIDE — v2.1</div>
+        <h1 class="hero-title fade-up delay-1" id="hero-title">
+          ДОБРО<br>ПОЖАЛО<span class="accent">ВАТ</span>Ь,<br><span class="accent-gold">ДОКТОР</span>
+        </h1>
+        <p class="hero-desc fade-up delay-2">
+          Arknights — тактическая tower-defense RPG от HyperGryph. Этот путеводитель поможет тебе освоить механики, выбрать операторов и не потеряться в мире Терры.
+        </p>
+        <div class="hero-actions fade-up delay-3">
+          <a href="pages/mechanics.html" class="btn btn-primary">⚙ Изучить механики</a>
+          <a href="pages/operators.html" class="btn btn-outline">👤 Операторы</a>
+          <a href="pages/tips.html" class="btn btn-gold">💡 Советы новичку</a>
+        </div>
+      </div>
+    </section>
+
+    <main class="main-content" id="main">
+
+      <!-- STATS -->
+      <div class="stats-strip fade-up" id="stats-strip">
+        <div class="stat-block"><div class="stat-value" id="stat-ops">—</div><div class="stat-label">Операторов в базе</div></div>
+        <div class="stat-block"><div class="stat-value" id="stat-mech">—</div><div class="stat-label">Механик описано</div></div>
+        <div class="stat-block"><div class="stat-value" id="stat-tips">—</div><div class="stat-label">Советов новичку</div></div>
+        <div class="stat-block"><div class="stat-value" id="stat-faq">—</div><div class="stat-label">Частых вопросов</div></div>
+      </div>
+
+      <!-- ABOUT GAME -->
+      <section class="section fade-up" aria-labelledby="about-title">
+        <div class="section-header">
+          <div class="section-tag">// 01 — О ИГРЕ</div>
+          <h2 class="section-title" id="about-title">Что такое Arknights?</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="card-grid cols-3">
+          <div class="card">
+            <div style="font-size:2rem;margin-bottom:.75rem">🗺️</div>
+            <h3 style="font-family:var(--font-display);font-size:.85rem;font-weight:700;text-transform:uppercase;margin-bottom:.5rem">Сеттинг</h3>
+            <p style="font-size:.83rem;color:var(--text-muted)">Мир Терра, захлёстнутый болезнью Оригиний. Ты — Доктор, лидер мобильной базы Rhodes Island, защищающий заражённых и исследующий лекарство.</p>
+          </div>
+          <div class="card">
+            <div style="font-size:2rem;margin-bottom:.75rem">⚔️</div>
+            <h3 style="font-family:var(--font-display);font-size:.85rem;font-weight:700;text-transform:uppercase;margin-bottom:.5rem">Геймплей</h3>
+            <p style="font-size:.83rem;color:var(--text-muted)">Tower defense с тактической глубиной. Размещай операторов на карте, блокируй врагов, используй навыки в нужный момент — и не позволяй никому пройти к точке выхода.</p>
+          </div>
+          <div class="card">
+            <div style="font-size:2rem;margin-bottom:.75rem">👥</div>
+            <h3 style="font-family:var(--font-display);font-size:.85rem;font-weight:700;text-transform:uppercase;margin-bottom:.5rem">Операторы</h3>
+            <p style="font-size:.83rem;color:var(--text-muted)">Более 200 уникальных персонажей с проработанными историями, способностями и ролями в бою. От 1★ до 6★ — каждый занимает своё место в стратегии.</p>
+          </div>
+          <div class="card">
+            <div style="font-size:2rem;margin-bottom:.75rem">📖</div>
+            <h3 style="font-family:var(--font-display);font-size:.85rem;font-weight:700;text-transform:uppercase;margin-bottom:.5rem">Нарратив</h3>
+            <p style="font-size:.83rem;color:var(--text-muted)">Один из лучших сюжетов в мобильном гейминге. Сложные политические интриги, моральные дилеммы, тысячи страниц текста на уровне романа.</p>
+          </div>
+          <div class="card">
+            <div style="font-size:2rem;margin-bottom:.75rem">🎮</div>
+            <h3 style="font-family:var(--font-display);font-size:.85rem;font-weight:700;text-transform:uppercase;margin-bottom:.5rem">Режимы</h3>
+            <p style="font-size:.83rem;color:var(--text-muted)">Основная кампания, еженедельное Уничтожение, рогалик «Интегрированные стратегии», ивентовый «Контракт кризиса» и многое другое.</p>
+          </div>
+          <div class="card">
+            <div style="font-size:2rem;margin-bottom:.75rem">💎</div>
+            <h3 style="font-family:var(--font-display);font-size:.85rem;font-weight:700;text-transform:uppercase;margin-bottom:.5rem">F2P-дружелюбность</h3>
+            <p style="font-size:.83rem;color:var(--text-muted)">Весь контент проходим без доната. Грамотное управление ресурсами позволяет получать 6★ операторов и проходить топ-сложности бесплатно.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUICK START -->
+      <section class="section fade-up" aria-labelledby="qs-title">
+        <div class="section-header">
+          <div class="section-tag">// 02 — БЫСТРЫЙ СТАРТ</div>
+          <h2 class="section-title" id="qs-title">Первые шаги</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="info-box gold">
+          <strong>Совет:</strong> Не торопись и наслаждайся историей. Arknights — марафон, а не спринт. Ресурсы накапливаются постепенно, и спешка только навредит.
+        </div>
+
+        <div class="card-grid cols-2" style="margin-top:1.5rem">
+          <div class="card" style="border-left:3px solid var(--accent-cyan)">
+            <h3 style="font-family:var(--font-display);font-size:.8rem;font-weight:700;text-transform:uppercase;color:var(--accent-cyan);margin-bottom:1rem">Неделя 1–2</h3>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:.6rem;font-size:.83rem;color:var(--text-muted)">
+              <li>✔ Пройди обучение и главы 0–2</li>
+              <li>✔ Сделай 10-кратный призыв из стартового запаса</li>
+              <li>✔ Прокачай 3–4 оператора до E1 Lv.40</li>
+              <li>✔ Начни еженедельное Уничтожение</li>
+              <li>✔ Открой базу (База Rhodes Island)</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left:3px solid var(--accent-gold)">
+            <h3 style="font-family:var(--font-display);font-size:.8rem;font-weight:700;text-transform:uppercase;color:var(--accent-gold);margin-bottom:1rem">Неделя 3–4</h3>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:.6rem;font-size:.83rem;color:var(--text-muted)">
+              <li>✔ Выведи 1–2 оператора на E2</li>
+              <li>✔ Начни копить на лимитный ивент</li>
+              <li>✔ Попробуй Интегрированные стратегии</li>
+              <li>✔ Исследуй базу — улучши производство</li>
+              <li>✔ Прокачай навыки до уровня 7</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPERATOR PREVIEW -->
+      <section class="section fade-up" aria-labelledby="ops-preview-title">
+        <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem">
+          <div>
+            <div class="section-tag">// 03 — ОПЕРАТОРЫ</div>
+            <h2 class="section-title" id="ops-preview-title">Рекомендуемые новичкам</h2>
+            <div class="section-divider"></div>
+          </div>
+          <a href="pages/operators.html" class="btn btn-outline" style="white-space:nowrap">Все операторы →</a>
+        </div>
+        <div id="op-preview-grid" class="card-grid cols-4"><div class="loading">загрузка операторов</div></div>
+      </section>
+
+      <!-- MECHANICS PREVIEW -->
+      <section class="section fade-up" aria-labelledby="mech-preview-title">
+        <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem">
+          <div>
+            <div class="section-tag">// 04 — МЕХАНИКИ</div>
+            <h2 class="section-title" id="mech-preview-title">Ключевые механики</h2>
+            <div class="section-divider"></div>
+          </div>
+          <a href="pages/mechanics.html" class="btn btn-outline" style="white-space:nowrap">Все механики →</a>
+        </div>
+        <div id="mech-preview-grid" class="card-grid cols-2"><div class="loading">загрузка механик</div></div>
+      </section>
+
+      <!-- FAQ PREVIEW -->
+      <section class="section fade-up" aria-labelledby="faq-preview-title">
+        <div class="section-header">
+          <div class="section-tag">// 05 — FAQ</div>
+          <h2 class="section-title" id="faq-preview-title">Частые вопросы</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div id="faq-preview" class="card" style="padding:0"><div class="loading">загрузка FAQ</div></div>
+      </section>
+
+    </main>
+
+    <div id="footer-mount"></div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module">
+    import { initDB, getAll } from './js/database.js';
+    import { renderHeader, renderFooter, initBurger, rarityStars, CLASS_EMOJI } from './js/components.js';
+
+    // Mount header / footer
+    document.getElementById('header-mount').innerHTML = renderHeader('index');
+    document.getElementById('footer-mount').innerHTML = renderFooter();
+    initBurger();
+
+    // ── Load data ────────────────────────────────────────────
+    initDB().then(async () => {
+      const [ops, mechs, tips, faq] = await Promise.all([
+        getAll('operators'), getAll('mechanics'), getAll('tips'), getAll('faq')
+      ]);
+
+      // Stats
+      document.getElementById('stat-ops').textContent  = ops.length;
+      document.getElementById('stat-mech').textContent = mechs.length;
+      document.getElementById('stat-tips').textContent = tips.length;
+      document.getElementById('stat-faq').textContent  = faq.length;
+
+      // Operator preview (first 4, easiest)
+      const previewOps = ops.filter(o => o.difficulty === 'Легко').slice(0, 4);
+      document.getElementById('op-preview-grid').innerHTML = previewOps.map(op => `
+        <div class="card op-card rarity-${op.rarity}" tabindex="0" role="button" aria-label="Оператор ${op.name}">
+          <div class="op-header">
+            <div class="op-avatar">${CLASS_EMOJI[op.class] || '👤'}</div>
+            <div class="op-meta">
+              <div class="op-name">${op.name}</div>
+              <div class="op-class">${op.class}</div>
+              <div class="op-rarity">${rarityStars(op.rarity)}</div>
+            </div>
+          </div>
+          <div class="op-role">${op.role}</div>
+          <div class="op-tags">${op.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        </div>`).join('');
+
+      // Mechanics preview (first 4)
+      const previewMechs = mechs.slice(0, 4);
+      document.getElementById('mech-preview-grid').innerHTML = previewMechs.map(m => `
+        <div class="card">
+          <div class="mech-card">
+            <div class="mech-icon">${m.icon}</div>
+            <div>
+              <div class="mech-title">${m.title}</div>
+              <div class="mech-desc">${m.description}</div>
+            </div>
+          </div>
+        </div>`).join('');
+
+      // FAQ preview (first 3)
+      const previewFaq = faq.slice(0, 3);
+      document.getElementById('faq-preview').innerHTML = previewFaq.map(f => `
+        <div class="faq-item" style="padding:0 1.5rem">
+          <button class="faq-question">${f.q}<span class="faq-arrow">▶</span></button>
+          <div class="faq-answer">${f.a}</div>
+        </div>`).join('') +
+        `<div style="padding:1rem 1.5rem;border-top:1px solid var(--border)">
+           <a href="pages/tips.html" class="btn btn-outline" style="font-size:.6rem">Ещё советы и FAQ →</a>
+         </div>`;
+
+      // FAQ toggle
+      document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+      });
+    });
+  </script>
+</body>
+</html>
