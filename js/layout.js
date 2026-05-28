@@ -69,9 +69,9 @@ function injectLayout() {
           <p class="footer-title">Контакты</p>
           <div class="footer-contact">
             <span class="label">Связь</span>
-            <span>rhodes@terra.net</span>
+            <span>s2ashkov@gmail.com</span>
             <span class="label" style="margin-top:0.5rem">Телефон</span>
-            <span>+7 (000) 174-0-000</span>
+            <span>+7 (963) 539-08-77</span>
             <span class="label" style="margin-top:0.5rem">Политика</span>
             <span><a href="#" style="color:var(--text-secondary)">Конфиденциальность</a></span>
           </div>
